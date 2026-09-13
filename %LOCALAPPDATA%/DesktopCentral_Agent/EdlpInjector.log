@@ -1,0 +1,13 @@
+﻿Date	Time	Severity	PID	TID	Function	Message
+13-09-2026	15:13:13.303	 INFO	 34936	 36696	DllMain	"DLL_PROCESS_ATTACH "
+13-09-2026	15:13:13.304	 INFO	 34936	 37188	InitializeCurrentProcessInfo	"0|0|0"
+13-09-2026	15:13:13.306	ERROR	 34936	 37188	Edlp::Process::GetLabelId	"std::exception thrown GetFileVersionInfoSizeW failed with 1813"
+13-09-2026	15:13:13.306	 INFO	 34936	 37188	ProcessEdlpPolicy	"Label Id :0"
+13-09-2026	15:13:13.334	 INFO	 34936	 37188	LoadDlls	" Dlls : PrinterMonitorDll DragDropDll "
+13-09-2026	15:13:13.335	 INFO	 34936	 37188	Injector	"PolicyVersion : 1788868310"
+13-09-2026	15:13:13.366	 INFO	 34232	 38908	DllMain	"DLL_PROCESS_ATTACH "
+13-09-2026	15:13:13.366	 INFO	 34232	 37324	InitializeCurrentProcessInfo	"0|0|0"
+13-09-2026	15:13:13.368	ERROR	 34232	 37324	Edlp::Process::GetLabelId	"std::exception thrown GetFileVersionInfoSizeW failed with 1813"
+13-09-2026	15:13:13.368	 INFO	 34232	 37324	ProcessEdlpPolicy	"Label Id :0"
+13-09-2026	15:13:13.395	 INFO	 34232	 37324	LoadDlls	" Dlls : PrinterMonitorDll DragDropDll "
+13-09-2026	15:13:13.395	 INFO	 34232	 37324	Injector	"PolicyVersion : 1788868310"
