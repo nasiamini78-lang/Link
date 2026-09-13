@@ -1,2446 +1,1568 @@
+
 <!doctype html>
 <html lang="fa" dir="rtl">
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>سامانه لینک‌های مجاز | شرکت سازه گستر سایپا</title>
-
+<meta name="description" content="فهرست رسمی سامانه‌ها و وب‌سایت‌های مجاز سازمانی شرکت سازه گستر سایپا">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
-rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
- 
 /* =========================================================
-   COLORS
+   DESIGN TOKENS
 ========================================================= */
-
 :root{
+    --navy-950:#061229;
+    --navy-900:#081c3f;
+    --navy-800:#0b2350;
+    --navy-700:#123a75;
+    --navy-600:#1a4c96;
 
-    --navy:#06152f;
-    --navy2:#092650;
-    --navy3:#103d78;
+    --steel-600:#1e5fc6;
+    --steel-500:#2f74da;
+    --steel-300:#7fa8ec;
+    --steel-200:#b9cdf1;
+    --steel-100:#dde8f8;
 
-    --blue:#1d5fc4;
-    --blue-light:#4e8fe9;
+    --gold-600:#ab872f;
+    --gold-500:#c9a24b;
+    --gold-400:#d8b96a;
+    --gold-300:#e6d19a;
+    --gold-100:#f6edd6;
 
-    --gold:#d8b45c;
-    --gold-light:#f1dfa0;
+    --paper:#edf1f7;
+    --line:#d9e2ef;
+    --ink:#17243f;
+    --muted:#64748f;
 
-    --white:#ffffff;
-
-    --background:#f4f7fb;
-
-    --text:#182235;
-    --muted:#718096;
-
-    --border:#e1e7f0;
-
+    --font-body:"Vazirmatn",Tahoma,sans-serif;
+    --font-display:"Noto Kufi Arabic","Vazirmatn",Tahoma,sans-serif;
 }
-
 
 /* =========================================================
    RESET
 ========================================================= */
-
-*{
-    box-sizing:border-box;
-}
-
-
-html,
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-
-    margin:0;
-    padding:0;
-
-    width:100%;
-    min-height:100%;
-
+    font-family:var(--font-body);
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    min-height:100vh;
 }
 
-
-body{
-
-    position:relative;
-
-    font-family:
-        "Vazirmatn",
-        Tahoma,
-        Arial,
-        sans-serif;
-
-    color:var(--text);
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #f3f6fb,
-            #e7edf6,
-            #f8fafc
-        );
-
-}
-
-
-/* =========================================================
-   BACKGROUND LOGO
-========================================================= */
-
+/* blueprint grid background */
 body::before{
-
     content:"";
-
     position:fixed;
-
-    z-index:0;
-
-    pointer-events:none;
-
-    width:900px;
-    height:900px;
-
-    left:50%;
-    top:55%;
-
-    transform:
-        translate(-50%,-50%);
-
-    background-image:url("logo.png");
-
-    background-repeat:no-repeat;
-
-    background-position:center;
-
-    background-size:contain;
-
-    opacity:.035;
-
+    inset:0;
+    z-index:-1;
+    background-image:
+        linear-gradient(rgba(11,35,80,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(11,35,80,.035) 1px,transparent 1px);
+    background-size:34px 34px;
 }
 
+::selection{
+    background:rgba(201,162,75,.42);
+    color:var(--navy-900);
+}
+
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#bcc9dd;border-radius:8px;border:2px solid var(--paper)}
+::-webkit-scrollbar-thumb:hover{background:#9fb0ca}
+
+mark{
+    background:rgba(230,209,154,.55);
+    color:inherit;
+    border-radius:3px;
+    padding:0 1px;
+}
 
 /* =========================================================
-   TOP LINE
+   KEYFRAMES
 ========================================================= */
-
-.top-line{
-
-    position:relative;
-
-    z-index:20;
-
-    width:100%;
-
-    height:5px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            var(--gold),
-            var(--gold-light),
-            var(--gold),
-            var(--gold-light),
-            var(--gold)
-        );
-
-    background-size:300% 100%;
-
-    animation:goldMove 8s linear infinite;
-
+@keyframes gold-slide{
+    0%{background-position:0% 0}
+    100%{background-position:220% 0}
+}
+@keyframes card-in{
+    from{opacity:0;transform:translateY(16px) scale(.985)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes toast-in{
+    from{opacity:0;transform:translate(-50%,16px)}
+    to{opacity:1;transform:translate(-50%,0)}
+}
+@keyframes shimmer{
+    from{background-position:200% 0}
+    to{background-position:-200% 0}
+}
+@keyframes float-slow{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-4px)}
+}
+.animate-card-in{animation:card-in .5s cubic-bezier(.2,.7,.3,1) both}
+.animate-toast-in{animation:toast-in .32s cubic-bezier(.2,.7,.3,1) both}
+.animate-float-slow{animation:float-slow 4.5s ease-in-out infinite}
+.skeleton-shimmer{
+    background:linear-gradient(90deg,#e4eaf3 25%,#f2f6fb 50%,#e4eaf3 75%);
+    background-size:200% 100%;
+    animation:shimmer 1.4s ease infinite;
 }
 
-
-@keyframes goldMove{
-
-    0%{
-        background-position:0% 50%;
-    }
-
-    100%{
-        background-position:300% 50%;
-    }
-
+.gold-strip{
+    background:linear-gradient(90deg,var(--gold-600),var(--gold-300),var(--gold-500),var(--gold-300),var(--gold-600));
+    background-size:220% 100%;
+    animation:gold-slide 7s linear infinite;
 }
 
+.blueprint-grid{
+    background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:34px 34px;
+}
+
+.hatch-gold{
+    background-image:repeating-linear-gradient(45deg,rgba(201,162,75,.16) 0 1px,transparent 1px 10px);
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+    }
+}
 
 /* =========================================================
    HEADER
 ========================================================= */
-
 .header{
-
     position:relative;
-
-    z-index:5;
-
-    width:100%;
-
     overflow:hidden;
-
     color:#fff;
-
-    background:
-
-        radial-gradient(
-            circle at 50% -20%,
-            rgba(72,135,222,.22),
-            transparent 40%
-        ),
-
-        radial-gradient(
-            circle at 15% 80%,
-            rgba(216,180,92,.08),
-            transparent 30%
-        ),
-
-        linear-gradient(
-            135deg,
-            var(--navy),
-            var(--navy2) 55%,
-            #0b2d60
-        );
-
-    box-shadow:
-
-        0 10px 35px
-        rgba(5,25,58,.20);
-
 }
-
-
-/* =========================================================
-   HEADER INNER
-========================================================= */
+.header-bg{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(1000px 500px at 90% 0%,rgba(47,116,218,.3),transparent 65%),
+        radial-gradient(800px 400px at 10% 100%,rgba(201,162,75,.15),transparent 60%),
+        radial-gradient(600px 300px at 50% 50%,rgba(30,95,198,.1),transparent 70%),
+        linear-gradient(150deg,#061229 0%,#0b2350 45%,#123a75 100%);
+}
+.header-grid{
+    position:absolute;
+    inset:0;
+    opacity:.4;
+    -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 20%,black 30%,transparent 78%);
+    mask-image:radial-gradient(ellipse 90% 80% at 50% 20%,black 30%,transparent 78%);
+}
+.header-hatch-1{
+    position:absolute;
+    left:-3rem;
+    top:-5rem;
+    width:16rem;
+    height:16rem;
+    border-radius:9999px;
+    transform:rotate(12deg);
+    filter:blur(2px);
+    opacity:.5;
+}
+.header-hatch-2{
+    position:absolute;
+    bottom:-6rem;
+    right:5%;
+    width:14rem;
+    height:14rem;
+    border-radius:9999px;
+    transform:rotate(45deg);
+    filter:blur(2px);
+    opacity:.5;
+}
+.header-watermark{
+    position:absolute;
+    bottom:-6rem;
+    left:-4rem;
+    width:27.5rem;
+    transform:rotate(-12deg);
+    opacity:.04;
+    pointer-events:none;
+    user-select:none;
+    display:none;
+}
+@media(min-width:768px){
+    .header-watermark{display:block}
+}
 
 .header-inner{
-
     position:relative;
-
-    z-index:2;
-
-    width:100%;
-
-    min-height:310px;
-
-    padding:
-        24px
-        20px
-        35px;
-
+    z-index:10;
+    max-width:72rem;
+    margin:0 auto;
+    padding:2.5rem 1rem 5rem;
+}
+@media(min-width:640px){
+    .header-inner{padding:3rem 1.5rem 5rem}
 }
 
-
-/* =========================================================
-   BRAND
-========================================================= */
+.brand-row{
+    display:flex;
+    flex-direction:column;
+    gap:2rem;
+    text-align:center;
+}
+@media(min-width:768px){
+    .brand-row{
+        flex-direction:row;
+        align-items:flex-start;
+        justify-content:space-between;
+        text-align:right;
+    }
+}
 
 .brand{
-
-    position:relative;
-
-    z-index:5;
-
-    width:max-content;
-
-    max-width:95%;
-
-    margin:0 auto;
-
     display:flex;
-
-    flex-direction:row;
-
     align-items:center;
-
-    justify-content:center;
-
-    gap:17px;
-
-    direction:rtl;
-
-    animation:brandFloat 4.5s ease-in-out infinite;
-
+    gap:1.25rem;
 }
-
-
-@keyframes brandFloat{
-
-    0%,
-    100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-3px);
-    }
-
+@media(min-width:640px){
+    .brand{gap:1.5rem}
 }
-
-
-/* =========================================================
-   LOGO
-========================================================= */
 
 .logo-box{
-
-    position:relative;
-
-    width:82px;
-    height:82px;
-
-    flex-shrink:0;
-
-    padding:9px;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
+    width:4.625rem;
+    height:4.625rem;
+    flex-shrink:0;
+    padding:.625rem;
     background:#fff;
-
-    border:
-        1px solid
-        rgba(216,180,92,.85);
-
-    border-radius:20px;
-
-    box-shadow:
-
-        0 10px 28px
-        rgba(0,0,0,.28),
-
-        0 0 0 4px
-        rgba(216,180,92,.06);
-
-    overflow:hidden;
-
+    border:1px solid rgba(201,162,75,.7);
+    border-radius:1rem;
+    box-shadow:0 16px 40px rgba(2,10,26,.5);
+    transition:transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s;
 }
-
-
-.logo{
-
-    display:block;
-
+.logo-box:hover{
+    transform:scale(1.05);
+    box-shadow:0 20px 50px rgba(2,10,26,.6);
+}
+@media(min-width:640px){
+    .logo-box{width:5rem;height:5rem}
+}
+.logo-box img{
     width:100%;
     height:100%;
-
     object-fit:contain;
-
 }
 
-
-/* =========================================================
-   COMPANY
-========================================================= */
-
-.company-info{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
-
+.company-name{
+    font-family:var(--font-display);
+    font-size:1.5rem;
+    font-weight:700;
+    line-height:1.55;
+    background:linear-gradient(to left,#fff 40%,var(--gold-300));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
 }
-
-
-.company{
-
-    color:#fff;
-
-    font-size:22px;
-
-    font-weight:800;
-
-    line-height:1.7;
-
-    white-space:nowrap;
-
-    text-shadow:
-        0 2px 10px rgba(0,0,0,.25);
-
+@media(min-width:640px){
+    .company-name{font-size:1.875rem}
 }
-
-
-.company-sub{
-
-    margin-top:3px;
-
-    color:#d9e3f2;
-
-    font-size:12px;
-
-    font-weight:500;
-
-}
-
 
 .brand-line{
-
-    width:48px;
-
+    display:block;
+    width:3.5rem;
     height:3px;
-
-    margin-top:9px;
-
-    border-radius:20px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            var(--gold),
-            var(--gold-light)
-        );
-
+    margin-top:.375rem;
+    border-radius:9999px;
+    background:linear-gradient(to left,var(--gold-500),var(--gold-300));
 }
 
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-.search-area{
-
-    position:absolute;
-
-    z-index:6;
-
-    left:50%;
-
-    top:142px;
-
-    width:min(
-        700px,
-        82%
-    );
-
-    transform:translateX(-50%);
-
+.company-sub{
+    margin-top:.625rem;
+    font-size:.75rem;
+    font-weight:500;
+    color:var(--steel-200);
+}
+@media(min-width:640px){
+    .company-sub{font-size:.8125rem}
 }
 
+/* meta */
+.meta-box{
+    display:none;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:.625rem;
+    flex-shrink:0;
+    font-size:.75rem;
+}
+@media(min-width:768px){
+    .meta-box{display:flex}
+}
 
-.search-box{
+.meta-date{
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    color:var(--steel-200);
+}
+.meta-time{
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    font-family:var(--font-display);
+    font-size:1.125rem;
+    font-weight:600;
+    color:#fff;
+    letter-spacing:.02em;
+}
 
+/* search */
+.search-section{
+    margin-top:2.5rem;
+    max-width:48rem;
+    margin-left:auto;
+    margin-right:auto;
+}
+.search-label{
+    display:block;
+    margin-bottom:.75rem;
+    font-family:var(--font-display);
+    font-size:.8125rem;
+    font-weight:600;
+    color:var(--gold-300);
+    text-align:center;
+}
+.search-wrap{
     position:relative;
-
-    width:100%;
-
 }
-
-
-.search{
-
-    width:100%;
-
-    height:57px;
-
-    padding:
-        0 58px 0 24px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.25);
-
-    border-radius:30px;
-
-    outline:none;
-
-    background:
-        rgba(255,255,255,.98);
-
-    color:var(--text);
-
-    font-family:inherit;
-
-    font-size:14px;
-
-    box-shadow:
-
-        0 14px 38px
-        rgba(0,0,0,.28);
-
-    transition:.25s;
-
-}
-
-
-.search::placeholder{
-    color:#7a8798;
-}
-
-
-.search:focus{
-
-    border-color:var(--gold);
-
-    box-shadow:
-
-        0 14px 40px
-        rgba(0,0,0,.30),
-
-        0 0 0 4px
-        rgba(216,180,92,.15);
-
-}
-
-
 .search-icon{
-
     position:absolute;
+    left:1.25rem;
+    top:50%;
+    transform:translateY(-50%);
+    width:1.25rem;
+    height:1.25rem;
+    color:var(--navy-700);
+    pointer-events:none;
+    transition:color .2s;
+}
+.search-input{
+    width:100%;
+    height:3.75rem;
+    padding:0 4rem 0 3.5rem;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:1rem;
+    background:#fff;
+    color:var(--ink);
+    font-family:inherit;
+    font-size:.9375rem;
+    font-weight:500;
+    box-shadow:0 20px 50px rgba(2,10,26,.5), 0 0 0 1px rgba(255,255,255,.05) inset;
+    outline:none;
+    transition:all .25s cubic-bezier(.2,.7,.3,1);
+}
+.search-input::placeholder{color:rgba(100,116,143,.7); font-weight:400}
+.search-input:focus{
+    border-color:var(--gold-500);
+    box-shadow:0 20px 50px rgba(2,10,26,.5), 0 0 0 4px rgba(201,162,75,.25);
+}
+.search-input:focus ~ .search-icon{color:var(--steel-600)}
 
-    right:19px;
-    top:13px;
-
-    width:30px;
-    height:30px;
-
+.search-clear{
+    position:absolute;
+    right:.75rem;
+    top:50%;
+    transform:translateY(-50%);
     display:flex;
-
     align-items:center;
     justify-content:center;
-
-    color:var(--navy3);
-
-    font-size:23px;
-
-    pointer-events:none;
-
+    width:2.25rem;
+    height:2.25rem;
+    border:none;
+    border-radius:.625rem;
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
+    transition:all .15s;
 }
+.search-clear:hover{background:var(--paper);color:var(--navy-800)}
 
+.search-hint{
+    display:none;
+    position:absolute;
+    right:1rem;
+    top:50%;
+    transform:translateY(-50%);
+    align-items:center;
+    justify-content:center;
+    width:2rem;
+    height:2rem;
+    border:1px solid var(--line);
+    border-radius:.5rem;
+    background:var(--paper);
+    font-size:.75rem;
+    font-weight:700;
+    color:var(--muted);
+    pointer-events:none;
+}
+@media(min-width:640px){
+    .search-hint{display:flex}
+}
 
 /* =========================================================
    MAIN
 ========================================================= */
-
 .main{
-
     position:relative;
-
     z-index:10;
-
-    width:100%;
-
-    padding:
-        20px
-        3.5%
-        45px;
-
+    max-width:72rem;
+    margin:-3rem auto 0;
+    padding:0 1rem 3rem;
+}
+@media(min-width:640px){
+    .main{padding:0 1.5rem 3rem}
 }
 
-
-/* =========================================================
-   CATEGORY BAR
-========================================================= */
-
+/* category bar */
+.toolbar-wrap{
+    position:sticky;
+    top:.75rem;
+    z-index:30;
+    margin-top:2rem;
+}
 .toolbar{
-
-    width:100%;
-
-    padding:7px;
-
     display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
     flex-wrap:wrap;
-
-    gap:7px;
-
-    background:
-        rgba(255,255,255,.94);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:18px;
-
-    box-shadow:
-        0 5px 20px
-        rgba(8,38,79,.08);
-
-}
-
-
-/* =========================================================
-   CATEGORY BUTTON
-========================================================= */
-
-.cat{
-
-    border:
-        1px solid
-        #e2e7ef;
-
-    background:#f7f9fc;
-
-    color:#526176;
-
-    padding:
-        7px 14px;
-
-    border-radius:22px;
-
-    cursor:pointer;
-
-    font-family:inherit;
-
-    font-size:11px;
-
-    transition:.2s;
-
-    user-select:none;
-
-}
-
-
-.cat:hover{
-
-    background:#eef3f9;
-
-    color:var(--navy3);
-
-    transform:translateY(-1px);
-
-}
-
-
-.cat.active{
-
-    color:#fff;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            var(--navy3),
-            var(--blue)
-        );
-
-    border-color:var(--blue);
-
-    box-shadow:
-
-        0 4px 12px
-        rgba(29,95,196,.20);
-
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-.status{
-
-    width:100%;
-
-    margin:
-        15px 4px 12px;
-
-    color:var(--muted);
-
-    font-size:11px;
-
-    text-align:right;
-
-}
-
-
-/* =========================================================
-   GRID
-========================================================= */
-
-.grid{
-
-    width:100%;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px,1fr)
-        );
-
-    gap:13px;
-
-}
-
-
-/* =========================================================
-   CARD
-========================================================= */
-
-.card{
-
-    position:relative;
-
-    overflow:hidden;
-
-    min-height:135px;
-
-    display:flex;
-
-    flex-direction:column;
-
     align-items:center;
-
-    justify-content:flex-start;
-
-    padding:
-        17px
-        15px
-        13px;
-
-    background:
-        rgba(255,255,255,.96);
-
-    border:
-        1px solid
-        #e1e7f0;
-
-    border-radius:17px;
-
-    color:inherit;
-
-    text-decoration:none;
-
-    text-align:center;
-
-    box-shadow:
-        0 4px 16px
-        rgba(8,38,79,.07);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        border-color .2s ease;
-
-}
-
-
-.card::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    right:0;
-    left:0;
-
-    height:3px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            var(--navy),
-            var(--blue),
-            var(--gold)
-        );
-
-}
-
-
-.card::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:160px;
-    height:160px;
-
-    left:-100px;
-    bottom:-100px;
-
-    border-radius:50%;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(216,180,92,.15),
-            transparent 70%
-        );
-
-    opacity:0;
-
-    transition:.3s;
-
-}
-
-
-.card:hover{
-
-    transform:
-        translateY(-4px);
-
-    border-color:
-        rgba(29,95,196,.30);
-
-    box-shadow:
-        0 14px 32px
-        rgba(8,38,79,.14);
-
-}
-
-
-.card:hover::after{
-    opacity:1;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.title{
-
-    position:relative;
-
-    z-index:2;
-
-    width:100%;
-
-    color:var(--navy);
-
-    font-size:14px;
-
-    font-weight:700;
-
-    line-height:1.9;
-
-    text-align:center;
-
-}
-
-
-.card:hover .title{
-    color:var(--blue);
-}
-
-
-/* =========================================================
-   BADGE
-========================================================= */
-
-.badge{
-
-    position:relative;
-
-    z-index:2;
-
-    display:inline-flex;
-
-    align-items:center;
-
     justify-content:center;
-
-    margin-top:7px;
-
-    padding:
-        4px 10px;
-
-    border-radius:20px;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #eef3fa,
-            #f5f8fc
-        );
-
-    color:#46617f;
-
-    font-size:9px;
-
+    gap:.5rem;
+    padding:.5rem;
+    background:rgba(255,255,255,.98);
+    border:1px solid var(--line);
+    border-radius:1rem;
+    box-shadow:0 12px 40px -16px rgba(8,28,63,.3);
+    backdrop-filter:blur(8px);
+}
+.cat-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.375rem;
+    padding:.5rem 1rem;
+    border:1px solid transparent;
+    border-radius:.625rem;
+    background:transparent;
+    color:var(--muted);
+    font-family:inherit;
+    font-size:.75rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .2s cubic-bezier(.2,.7,.3,1);
+    user-select:none;
+}
+.cat-btn:hover{
+    transform:translateY(-2px);
+    background:rgba(30,95,198,.08);
+    color:var(--navy-700);
+    border-color:rgba(30,95,198,.15);
+}
+.cat-btn.active{
+    background:linear-gradient(135deg,var(--navy-800),var(--navy-700));
+    border-color:var(--navy-700);
+    color:#fff;
+    box-shadow:0 8px 24px -8px rgba(8,28,63,.6);
+}
+.cat-count{
+    padding:.125rem .5rem;
+    border-radius:.375rem;
+    font-size:.625rem;
+    font-weight:700;
+    line-height:1;
+}
+.cat-btn.active .cat-count{
+    background:var(--gold-500);
+    color:var(--navy-950);
+}
+.cat-btn:not(.active) .cat-count{
+    background:var(--paper);
+    color:var(--muted);
 }
 
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.desc{
-
-    position:relative;
-
-    z-index:2;
-
-    flex:1;
-
-    width:100%;
-
-    margin-top:7px;
-
-    color:#748196;
-
-    font-size:10px;
-
-    line-height:1.8;
-
-    text-align:center;
-
+/* status row */
+.status-row{
+    margin-top:1.25rem;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:.5rem;
+    padding:.75rem 1rem;
+    background:rgba(255,255,255,.9);
+    border:1px solid var(--line);
+    border-radius:.75rem;
+    backdrop-filter:blur(8px);
 }
-
-
-/* =========================================================
-   URL
-========================================================= */
-
-.url{
-
-    position:relative;
-
-    z-index:2;
-
-    width:100%;
-
-    margin-top:8px;
-
-    padding-top:7px;
-
-    border-top:
-        1px solid
-        #edf0f4;
-
-    color:#8792a2;
-
-    font-family:Arial,sans-serif;
-
-    font-size:8px;
-
-    direction:ltr;
-
-    text-align:center;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
+.status-text{
+    font-size:.8125rem;
+    color:var(--muted);
 }
-
-
-/* =========================================================
-   EMPTY
-========================================================= */
-
-.empty{
-
-    grid-column:1/-1;
-
-    padding:40px 20px;
-
+.status-text b{
+    font-family:var(--font-display);
+    font-size:.875rem;
+    color:var(--navy-800);
+}
+.clear-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.375rem;
+    padding:.5rem 1rem;
+    border:1px solid var(--line);
+    border-radius:.625rem;
     background:#fff;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:17px;
-
-    text-align:center;
-
-    color:#7a8798;
-
+    color:var(--steel-600);
+    font-family:inherit;
+    font-size:.75rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .2s cubic-bezier(.2,.7,.3,1);
+}
+.clear-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--steel-300);
+    color:var(--navy-800);
+    background:rgba(30,95,198,.05);
+    box-shadow:0 4px 16px -4px rgba(30,95,198,.2);
 }
 
+/* grid */
+.grid{
+    margin-top:1.5rem;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1rem;
+}
+@media(min-width:520px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:1024px){
+    .grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:1280px){
+    .grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* card */
+.card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    padding:1.25rem;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:1rem;
+    color:inherit;
+    text-decoration:none;
+    box-shadow:0 6px 24px -8px rgba(8,28,63,.1);
+    transition:all .3s cubic-bezier(.2,.7,.3,1);
+}
+.card:hover{
+    transform:translateY(-6px);
+    border-color:var(--steel-300);
+    box-shadow:0 24px 48px -16px rgba(8,28,63,.35);
+}
+.card:focus-visible{
+    outline:2px solid var(--steel-500);
+    outline-offset:2px;
+}
+
+.card-accent{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:4px;
+    opacity:.8;
+    transition:opacity .2s;
+}
+.card:hover .card-accent{opacity:1}
+
+.card-glow{
+    position:absolute;
+    bottom:-5rem;
+    right:-5rem;
+    width:12rem;
+    height:12rem;
+    border-radius:9999px;
+    opacity:0;
+    transition:opacity .3s;
+    pointer-events:none;
+}
+.card:hover .card-glow{opacity:1}
+
+.card-top{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap:.875rem;
+}
+.card-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:3rem;
+    height:3rem;
+    flex-shrink:0;
+    border-radius:.625rem;
+    transition:transform .25s cubic-bezier(.2,.7,.3,1);
+}
+.card:hover .card-icon{transform:scale(1.08)}
+.card-icon svg{width:1.5rem;height:1.5rem}
+
+.card-info{
+    flex:1;
+    min-width:0;
+}
+.card-title{
+    font-size:.9375rem;
+    font-weight:700;
+    line-height:1.6;
+    color:var(--navy-800);
+    transition:color .2s;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.card:hover .card-title{color:var(--steel-600)}
+
+.card-badge{
+    display:inline-block;
+    margin-top:.25rem;
+    padding:.1875rem .625rem;
+    border-radius:9999px;
+    font-size:.59375rem;
+    font-weight:700;
+    letter-spacing:.01em;
+}
+
+.card-copy{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:2.25rem;
+    height:2.25rem;
+    flex-shrink:0;
+    border:1px solid var(--line);
+    border-radius:.625rem;
+    background:var(--paper);
+    color:var(--muted);
+    cursor:pointer;
+    opacity:0;
+    transform:translateX(8px);
+    transition:all .2s cubic-bezier(.2,.7,.3,1);
+}
+.card:hover .card-copy{opacity:1; transform:translateX(0)}
+.card-copy:hover{
+    border-color:var(--steel-300);
+    color:var(--steel-600);
+    background:#fff;
+}
+.card-copy.copied{
+    opacity:1;
+    transform:translateX(0);
+    border-color:#6ee7b7;
+    background:#ecfdf5;
+    color:#059669;
+}
+.card-copy svg{width:1.125rem;height:1.125rem}
+
+.card-desc{
+    position:relative;
+    margin-top:.875rem;
+    min-height:2.75rem;
+    flex:1;
+    font-size:.71875rem;
+    line-height:1.75;
+    color:var(--muted);
+}
+
+.card-bottom{
+    position:relative;
+    margin-top:1rem;
+    padding-top:.875rem;
+    border-top:1px solid rgba(217,226,239,.7);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:.5rem;
+}
+.card-url{
+    font-family:monospace;
+    font-size:.65625rem;
+    letter-spacing:-.02em;
+    color:#64748b;
+    direction:ltr;
+    text-align:left;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    min-width:0;
+    flex:1;
+}
+.card-arrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:2rem;
+    height:2rem;
+    flex-shrink:0;
+    border-radius:9999px;
+    background:var(--paper);
+    color:var(--muted);
+    transition:all .25s cubic-bezier(.2,.7,.3,1);
+}
+.card:hover .card-arrow{
+    transform:translate(-3px,-3px);
+    background:var(--navy-800);
+    color:var(--gold-400);
+}
+.card-arrow svg{width:.875rem;height:.875rem}
+
+/* empty / error / skeleton */
+.empty-box,.error-box{
+    grid-column:1/-1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:5rem 2rem;
+    border-radius:1rem;
+    text-align:center;
+}
+.empty-box{
+    border:1px dashed var(--line);
+    background:rgba(255,255,255,.8);
+}
+.error-box{
+    border:1px solid #fecaca;
+    background:rgba(254,242,242,.7);
+}
+.empty-box h3,.error-box h3{
+    margin-top:1.5rem;
+    font-family:var(--font-display);
+    font-size:1.25rem;
+    font-weight:700;
+    color:var(--navy-800);
+}
+.empty-box p,.error-box p{
+    margin-top:.75rem;
+    max-width:28rem;
+    font-size:.8125rem;
+    line-height:1.8;
+    color:var(--muted);
+}
+.action-btn{
+    margin-top:2rem;
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.75rem 1.5rem;
+    border:none;
+    border-radius:.75rem;
+    background:linear-gradient(135deg,var(--navy-800),var(--navy-700));
+    color:#fff;
+    font-family:inherit;
+    font-size:.8125rem;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 12px 32px -10px rgba(8,28,63,.6);
+    transition:all .25s cubic-bezier(.2,.7,.3,1);
+}
+.action-btn:hover{
+    transform:translateY(-2px);
+    background:linear-gradient(135deg,var(--navy-700),var(--navy-600));
+    box-shadow:0 16px 40px -12px rgba(8,28,63,.7);
+}
+.action-btn svg{width:1.125rem;height:1.125rem}
+
+.skel-card{
+    padding:1.25rem;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:1rem;
+}
+.skel-row{display:flex;align-items:flex-start;gap:.875rem}
+.skel-icon{width:3rem;height:3rem;border-radius:.625rem;flex-shrink:0}
+.skel-line{height:.875rem;border-radius:.375rem}
+.skel-line-sm{height:.6875rem;border-radius:.375rem}
 
 /* =========================================================
    FOOTER
 ========================================================= */
-
 .footer{
-
-    width:100%;
-
-    margin-top:32px;
-
-    padding:23px;
-
-    border-radius:18px;
-
-    color:#cbd6e7;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            var(--navy),
-            var(--navy2)
-        );
-
-    text-align:center;
-
-    box-shadow:
-        0 8px 25px
-        rgba(8,38,79,.12);
-
-}
-
-
-.footer-title{
-
+    position:relative;
+    margin-top:4rem;
+    overflow:hidden;
     color:#fff;
+}
+.footer-bg{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(700px 300px at 15% 0%,rgba(201,162,75,.10),transparent 55%),
+        linear-gradient(150deg,#071733 0%,#0b2350 60%,#0e2f63 100%);
+}
+.footer-grid{
+    position:absolute;
+    inset:0;
+    opacity:.6;
+}
+.footer-inner{
+    position:relative;
+    z-index:10;
+    max-width:72rem;
+    margin:0 auto;
+    padding:0 1rem;
+}
+@media(min-width:640px){
+    .footer-inner{padding:0 1.5rem}
+}
+.footer-content{
+    display:grid;
+    gap:2.5rem;
+    padding:3rem 0;
+}
+@media(min-width:768px){
+    .footer-content{
+        grid-template-columns:auto 1fr;
+        gap:3rem;
+        align-items:start;
+    }
+}
 
-    font-size:13px;
-
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:.75rem;
+}
+.footer-logo-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:3rem;
+    height:3rem;
+    border:1px solid rgba(201,162,75,.5);
+    border-radius:.625rem;
+    background:#fff;
+    padding:.375rem;
+}
+.footer-logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+.footer-company{
+    font-family:var(--font-display);
+    font-size:1.0625rem;
     font-weight:700;
-
+    line-height:1.75;
+}
+.footer-sub{
+    font-size:.6875rem;
+    color:var(--steel-200);
 }
 
+.footer-heading{
+    font-family:var(--font-display);
+    font-size:.8125rem;
+    font-weight:700;
+    color:var(--gold-300);
+    margin-bottom:1rem;
+}
+.footer-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.5rem;
+    list-style:none;
+}
+.footer-link{
+    display:inline-flex;
+    align-items:center;
+    gap:.375rem;
+    padding:.5rem 1rem;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:.5rem;
+    font-size:.75rem;
+    color:var(--steel-200);
+    background:rgba(255,255,255,.03);
+    cursor:pointer;
+    font-family:inherit;
+    transition:all .2s cubic-bezier(.2,.7,.3,1);
+}
+.footer-link:hover{
+    color:var(--gold-300);
+    border-color:rgba(201,162,75,.3);
+    background:rgba(201,162,75,.05);
+    transform:translateY(-2px);
+}
+.footer-link svg{
+    width:.75rem;
+    height:.75rem;
+    color:rgba(201,162,75,.7);
+    transition:transform .2s;
+}
+.footer-link:hover svg{transform:translateX(-2px)}
 
-.made-by{
-
-    margin-top:9px;
-
-    color:var(--gold);
-
-    font-family:Arial,sans-serif;
-
-    font-size:9px;
-
+/* toast */
+.toast{
+    position:fixed;
+    bottom:1.5rem;
+    left:50%;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:.75rem;
+    padding:1rem 1.5rem;
+    border:1px solid rgba(201,162,75,.4);
+    border-radius:1rem;
+    background:rgba(6,18,41,.95);
+    color:#fff;
+    font-size:.8125rem;
     font-weight:600;
-
-    direction:ltr;
-
+    box-shadow:0 24px 60px rgba(2,10,26,.6);
+    white-space:nowrap;
+    backdrop-filter:blur(8px);
 }
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media(max-width:1000px){
-
-    .grid{
-
-        grid-template-columns:
-            repeat(
-                3,
-                minmax(0,1fr)
-            );
-
-    }
-
+.toast-check{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:1.75rem;
+    height:1.75rem;
+    border-radius:9999px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-400));
+    color:var(--navy-950);
 }
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:700px){
-
-    .header-inner{
-
-        min-height:300px;
-
-        padding:
-            20px
-            15px
-            25px;
-
-    }
-
-
-    body::before{
-
-        width:600px;
-
-        height:600px;
-
-        opacity:.025;
-
-    }
-
-
-    .brand{
-
-        gap:10px;
-
-    }
-
-
-    .logo-box{
-
-        width:65px;
-        height:65px;
-
-        padding:7px;
-
-        border-radius:16px;
-
-    }
-
-
-    .company{
-
-        font-size:16px;
-
-    }
-
-
-    .company-sub{
-
-        font-size:9px;
-
-    }
-
-
-    .brand-line{
-
-        width:38px;
-
-        height:2px;
-
-    }
-
-
-    .search-area{
-
-        top:140px;
-
-        width:90%;
-
-    }
-
-
-    .search{
-
-        height:52px;
-
-        font-size:12px;
-
-    }
-
-
-    .search-icon{
-        top:11px;
-    }
-
-
-    .main{
-
-        padding:
-            17px
-            12px
-            35px;
-
-    }
-
-
-    .grid{
-
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0,1fr)
-            );
-
-        gap:10px;
-
-    }
-
-
-    .card{
-
-        min-height:125px;
-
-        padding:
-            14px
-            10px
-            11px;
-
-    }
-
-
-    .title{
-        font-size:12px;
-    }
-
-
-    .badge{
-        font-size:8px;
-    }
-
-
-    .desc{
-        font-size:9px;
-    }
-
-
-    .url{
-        font-size:7px;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media(max-width:390px){
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-
-    .company{
-        font-size:14px;
-    }
-
-
-    .company-sub{
-        font-size:8px;
-    }
-
-}
-
+.toast-check svg{width:1rem;height:1rem}
 </style>
-
 </head>
-
-
 <body>
 
-
-<div class="top-line"></div>
-
-
+<!-- HEADER -->
 <header class="header">
+    <div class="header-bg"></div>
+    <div class="header-grid blueprint-grid"></div>
+    <div class="header-hatch-1 hatch-gold"></div>
+    <div class="header-hatch-2 hatch-gold"></div>
+    <img src="logo.png" alt="" class="header-watermark">
+
+    <div class="gold-strip" style="position:relative;z-index:10;height:6px"></div>
 
     <div class="header-inner">
-
-
-        <!-- LOGO + COMPANY -->
-
-        <div class="brand">
-
-
-            <div class="logo-box">
-
-                <img
-
-                    src="logo.png"
-
-                    class="logo"
-
-                    alt="لوگوی شرکت سازه گستر سایپا">
-
+        <div class="brand-row">
+            <div class="brand animate-float-slow">
+                <div class="logo-box">
+                    <img src="logo.png" alt="لوگوی شرکت سازه گستر سایپا">
+                </div>
+                <div>
+                    <h1 class="company-name">شرکت سازه گستر سایپا</h1>
+                    <span class="brand-line"></span>
+                    <p class="company-sub">درگاه متمرکز سامانه‌ها و لینک‌های مجاز سازمانی</p>
+                </div>
             </div>
 
-
-            <div class="company-info">
-
-                <div class="company">
-
-                    شرکت سازه گستر سایپا
-
-                </div>
-
-
-                <div class="company-sub">
-
-                    سامانه‌های مجاز سازمانی
-
-                </div>
-
-
-                <div class="brand-line"></div>
-
+            <div class="meta-box">
+                <span class="meta-date" id="metaDate"></span>
+                <span class="meta-time" id="metaTime" dir="ltr"></span>
             </div>
-
-
         </div>
 
-
-        <!-- SEARCH -->
-
-        <div class="search-area">
-
-            <div class="search-box">
-
-                <span class="search-icon">
-
-                    ⌕
-
-                </span>
-
-
-                <input
-
-                    id="search"
-
-                    class="search"
-
-                    type="text"
-
-                    placeholder="جستجو در سامانه‌ها و سایت‌های مجاز..."
-
-                    autocomplete="off">
-
+        <div class="search-section">
+            <label for="search" class="search-label">جستجوی سامانه</label>
+            <div class="search-wrap">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/></svg>
+                <input id="search" class="search-input" type="text" placeholder="نام، آدرس یا توضیح سامانه موردنظر را بنویسید…" autocomplete="off">
+                <span class="search-hint" id="searchHint">/</span>
+                <button class="search-clear" id="searchClear" style="display:none" aria-label="پاک کردن جستجو">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                </button>
             </div>
-
         </div>
-
-
     </div>
-
 </header>
 
-
+<!-- MAIN -->
 <main class="main">
-
-
-    <!-- CATEGORIES -->
-
-    <div
-        id="cats"
-        class="toolbar">
+    <!-- toolbar -->
+    <div class="toolbar-wrap">
+        <nav class="toolbar" id="toolbar" aria-label="دسته‌بندی لینک‌ها"></nav>
     </div>
 
-
-    <!-- STATUS -->
-
-    <div
-        id="status"
-        class="status">
+    <!-- status row -->
+    <div class="status-row" id="statusRow" style="display:none">
+        <p class="status-text" id="statusText"></p>
+        <button class="clear-btn" id="clearBtn" style="display:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:.875rem;height:.875rem"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            حذف فیلترها
+        </button>
     </div>
 
-
-    <!-- LINKS -->
-
-    <div
-        id="results"
-        class="grid">
-    </div>
-
-
-    <!-- FOOTER -->
-
-    <div class="footer">
-
-
-        <div class="footer-title">
-
-            شرکت سازه گستر سایپا
-
-        </div>
-
-
-        <div>
-
-            سامانه لینک‌های مجاز سازمانی
-
-        </div>
-
-
-        <div class="made-by">
-
-            Made by Networks Department
-
-        </div>
-
-
-    </div>
-
-
+    <!-- grid -->
+    <div class="grid" id="grid"></div>
 </main>
 
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-bg"></div>
+    <div class="footer-grid blueprint-grid"></div>
+    <div class="gold-strip" style="position:relative;z-index:10;height:4px"></div>
+
+    <div class="footer-inner">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo-box"><img src="logo.png" alt=""></div>
+                <div>
+                    <p class="footer-company">شرکت سازه گستر سایپا</p>
+                    <p class="footer-sub">سامانه لینک‌های مجاز سازمانی</p>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">دسترسی سریع</h4>
+                <ul class="footer-links" id="footerLinks"></ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast animate-toast-in" id="toast" style="display:none">
+    <span class="toast-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+    </span>
+    <span id="toastMsg"></span>
+</div>
 
 <script>
+/* =========================================================
+   STATE
+========================================================= */
+var links = [];
+var selectedCategory = "همه";
+var query = "";
+var toastTimer = null;
 
 /* =========================================================
-   GLOBAL VARIABLES
+   TEXT HELPERS
 ========================================================= */
-
-let links = [];
-
-let selectedCategory = "همه";
-
-
-/* =========================================================
-   NORMALIZE
-========================================================= */
-
-function normalize(value){
-
-    return String(value ?? "")
-
-        .replace(/^\uFEFF/, "")
-
-        .replace(/[\u200B-\u200F\uFEFF]/g, "")
-
-        .replace(/ي/g, "ی")
-
-        .replace(/ى/g, "ی")
-
-        .replace(/ك/g, "ک")
-
-        .replace(/ة/g, "ه")
-
-        .replace(/\u200C/g, "")
-
-        .replace(/ـ/g, "")
-
-        .replace(/[\s\u00A0]+/g, "")
-
-        .trim()
-
-        .toLowerCase();
-
+function normalize(v){
+    return String(v||"")
+        .replace(/^\uFEFF/,"")
+        .replace(/[\u200B-\u200F\uFEFF]/g,"")
+        .replace(/ي/g,"ی").replace(/ى/g,"ی").replace(/ك/g,"ک").replace(/ة/g,"ه")
+        .replace(/\u200C/g,"").replace(/ـ/g,"")
+        .replace(/[\s\u00A0]+/g,"")
+        .trim().toLowerCase();
 }
 
-
-/* =========================================================
-   SEARCH NORMALIZE
-========================================================= */
-
-function searchable(value){
-
-    return String(value ?? "")
-
-        .replace(/^\uFEFF/, "")
-
-        .replace(/[\u200B-\u200F\uFEFF]/g, "")
-
-        .replace(/ي/g, "ی")
-
-        .replace(/ى/g, "ی")
-
-        .replace(/ك/g, "ک")
-
-        .replace(/ة/g, "ه")
-
-        .replace(/\u200C/g, "")
-
-        .replace(/ـ/g, "")
-
-        .replace(
-            /[\s\u00A0]+/g,
-            " "
-        )
-
-        .trim()
-
-        .toLowerCase();
-
+function searchable(v){
+    return String(v||"")
+        .replace(/^\uFEFF/,"")
+        .replace(/[\u200B-\u200F\uFEFF]/g,"")
+        .replace(/ي/g,"ی").replace(/ى/g,"ی").replace(/ك/g,"ک").replace(/ة/g,"ه")
+        .replace(/\u200C/g,"").replace(/ـ/g,"")
+        .replace(/[\s\u00A0]+/g," ")
+        .trim().toLowerCase();
 }
 
-
-/* =========================================================
-   CLEAN
-========================================================= */
-
-function clean(value){
-
-    return String(value ?? "")
-
-        .replace(/^\uFEFF/, "")
-
-        .replace(/[\u200B-\u200F\uFEFF]/g, "")
-
-        .trim();
-
+function clean(v){
+    return String(v||"").replace(/^\uFEFF/,"").replace(/[\u200B-\u200F\uFEFF]/g,"").trim();
 }
 
-
-/* =========================================================
-   CATEGORY NAME
-========================================================= */
-
-function categoryName(value){
-
-    const n = normalize(value);
-
-
-    if(
-        n === "بانک" ||
-        n === "بانکها" ||
-        n === "بانک‌ها"
-    ){
-
-        return "بانک‌ها";
-
-    }
-
-
-    if(n === "دولتی"){
-
-        return "دولتی";
-
-    }
-
-
-    if(n === "بیمه"){
-
-        return "بیمه";
-
-    }
-
-
-    if(
-        n === "مالیاتی" ||
-        n === "مالیات"
-    ){
-
-        return "مالیاتی";
-
-    }
-
-
-    if(n === "سامانههایسازمانی"){
-
-        return "سامانه‌های سازمانی";
-
-    }
-
-
-    if(n === "خدماتعمومی"){
-
-        return "خدمات عمومی";
-
-    }
-
-
-    if(
-        n === "متفرقه" ||
-        n === "متفرق"
-    ){
-
-        return "متفرقه";
-
-    }
-
-
-    return clean(value);
-
+function categoryName(v){
+    var n = normalize(v);
+    if(n==="بانک"||n==="بانکها") return "بانک‌ها";
+    if(n==="دولتی") return "دولتی";
+    if(n==="بیمه") return "بیمه";
+    if(n==="مالیاتی"||n==="مالیات") return "مالیاتی";
+    if(n==="سامانههایسازمانی") return "سامانه‌های سازمانی";
+    if(n==="خدماتعمومی") return "خدمات عمومی";
+    if(n==="متفرقه"||n==="متفرق") return "متفرقه";
+    return clean(v);
 }
 
+function faDigits(n){ return Number(n).toLocaleString("fa-IR"); }
+
+function displayHost(url){
+    try{ return new URL(url).host.replace(/^www\./,""); }
+    catch(e){ return url.replace(/^https?:\/\//,"").replace(/\/$/,""); }
+}
+
+function esc(s){
+    return String(s||"").replace(/[&<>"']/g,function(m){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m];
+    });
+}
 
 /* =========================================================
    CSV PARSER
 ========================================================= */
-
 function parseCSV(text){
-
-    const rows = [];
-
-    let row = [];
-
-    let cell = "";
-
-    let quoted = false;
-
-
-    for(
-        let i=0;
-        i<text.length;
-        i++
-    ){
-
-        const ch = text[i];
-
-        const next = text[i+1];
-
-
-        if(ch === '"'){
-
-            if(
-                quoted &&
-                next === '"'
-            ){
-
-                cell += '"';
-
-                i++;
-
-            }
-
-            else{
-
-                quoted = !quoted;
-
-            }
-
-        }
-
-        else if(
-            ch === "," &&
-            !quoted
-        ){
-
-            row.push(cell);
-
-            cell = "";
-
-        }
-
-        else if(
-
-            (
-                ch === "\n" ||
-                ch === "\r"
-            )
-
-            &&
-
-            !quoted
-
-        ){
-
-            if(
-                ch === "\r" &&
-                next === "\n"
-            ){
-
-                i++;
-
-            }
-
-
-            row.push(cell);
-
-            cell = "";
-
-
-            if(
-                row.some(
-                    x =>
-                    String(x).trim() !== ""
-                )
-            ){
-
-                rows.push(row);
-
-            }
-
-
-            row = [];
-
-        }
-
-        else{
-
-            cell += ch;
-
-        }
-
+    var rows=[], row=[], cell="", quoted=false;
+    for(var i=0;i<text.length;i++){
+        var ch=text[i], next=text[i+1];
+        if(ch==='"'){
+            if(quoted && next==='"'){ cell+='"'; i++; }
+            else quoted=!quoted;
+        } else if(ch==="," && !quoted){
+            row.push(cell); cell="";
+        } else if((ch==="\n"||ch==="\r") && !quoted){
+            if(ch==="\r" && next==="\n") i++;
+            row.push(cell); cell="";
+            if(row.some(function(x){return String(x).trim()!==""})) rows.push(row);
+            row=[];
+        } else cell+=ch;
     }
-
-
-    if(
-        cell !== "" ||
-        row.length
-    ){
-
+    if(cell!==""||row.length){
         row.push(cell);
-
-
-        if(
-            row.some(
-                x =>
-                String(x).trim() !== ""
-            )
-        ){
-
-            rows.push(row);
-
-        }
-
+        if(row.some(function(x){return String(x).trim()!==""})) rows.push(row);
     }
-
-
     return rows;
-
 }
 
+/* =========================================================
+   CATEGORY VISUAL
+========================================================= */
+var CAT_VISUALS = {
+    "بانک":  {color:"#0d7a64", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5 12 4l8.5 5.5"/><path d="M5.5 10v7M10 10v7M14 10v7M18.5 10v7"/><path d="M3.5 20.5h17M3 17.5h18"/></svg>'},
+    "مالیات":{color:"#a05a2c", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v4h4"/><path d="m9.8 15.5 4.4-5.5"/><circle cx="9.7" cy="10.3" r=".9"/><circle cx="14.3" cy="15.2" r=".9"/></svg>'},
+    "بیمه": {color:"#a67c1f", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.5-3 8.1-7 9.8-4-1.7-7-5.3-7-9.8V5.8L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>'},
+    "دولت": {color:"#2f5da8", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 21h15"/><path d="M6 21V9.5h12V21"/><path d="M9.5 21v-4.5a2.5 2.5 0 0 1 5 0V21"/><path d="M12 9.5V5"/></svg>'},
+    "خدمات":{color:"#4f7d3c", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg>'},
+    "سازمانی":{color:"#1e5fc6", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.8 12 3 3 7.8v8.4L12 21l9-4.8V7.8Z"/><path d="m3 7.8 9 4.7 9-4.7"/><path d="M12 12.5V21"/></svg>'}
+};
+var CAT_DEFAULT = {color:"#5b6b84", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3.5 3 8v8l9 4.5L21 16V8Z"/><path d="m3 8 9 4.5L21 8"/><path d="M12 12.5V20.5"/></svg>'};
+
+function catVisual(cat){
+    var n = normalize(cat);
+    for(var key in CAT_VISUALS){
+        if(n.indexOf(normalize(key))!==-1) return CAT_VISUALS[key];
+    }
+    return CAT_DEFAULT;
+}
 
 /* =========================================================
-   HTML ESCAPE
+   HIGHLIGHT
 ========================================================= */
+function highlight(text, words){
+    if(!text) return text;
+    if(!words.length) return esc(text);
+    var parts = [];
+    var remaining = text;
+    words.forEach(function(w){
+        if(!w) return;
+        var escaped = w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+        var tolerant = Array.from(escaped).map(function(ch){
+            return ch.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+        }).join("[\\u200B-\\u200F\\uFEFF\\s]*");
+        try{
+            var re = new RegExp("("+tolerant+")","gi");
+            var segs = remaining.split(re);
+            var newParts = [];
+            segs.forEach(function(seg,i){
+                if(i%2===1){
+                    newParts.push("<mark>"+esc(seg)+"</mark>");
+                } else {
+                    newParts.push(esc(seg));
+                }
+            });
+            remaining = newParts.join("§§§");
+        } catch(e){}
+    });
+    return remaining.replace(/§§§/g,"");
+}
 
-function esc(value){
+/* =========================================================
+   COPY
+========================================================= */
+function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+        return navigator.clipboard.writeText(text).then(function(){return true}).catch(function(){return fallbackCopy(text)});
+    }
+    return Promise.resolve(fallbackCopy(text));
+}
+function fallbackCopy(text){
+    try{
+        var ta=document.createElement("textarea");
+        ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+        document.body.appendChild(ta); ta.select();
+        var ok=document.execCommand("copy");
+        ta.remove(); return ok;
+    }catch(e){return false}
+}
 
-    return String(
-        value ?? ""
-    ).replace(
+/* =========================================================
+   TOAST
+========================================================= */
+function showToast(msg){
+    var el=document.getElementById("toast");
+    document.getElementById("toastMsg").textContent=msg;
+    el.style.display="flex";
+    el.classList.remove("animate-toast-in");
+    void el.offsetWidth;
+    el.classList.add("animate-toast-in");
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){el.style.display="none"},2400);
+}
 
-        /[&<>"']/g,
+/* =========================================================
+   CLOCK
+========================================================= */
+function updateClock(){
+    var now=new Date();
+    document.getElementById("metaDate").innerHTML=
+        '<svg style="width:1rem;height:1rem;color:var(--gold-400)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg> '+
+        new Intl.DateTimeFormat("fa-IR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(now);
+    document.getElementById("metaTime").innerHTML=
+        '<svg style="width:1rem;height:1rem;color:var(--gold-400)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg> '+
+        new Intl.DateTimeFormat("fa-IR",{hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(now);
+}
 
-        function(m){
+/* =========================================================
+   RENDER
+========================================================= */
+function getWords(){
+    var q=searchable(query);
+    return q ? q.split(" ").filter(Boolean) : [];
+}
 
-            return {
+function getFiltered(){
+    var words=getWords();
+    var sel=normalize(selectedCategory);
+    return links.filter(function(item){
+        var catOK = sel==="همه" || normalize(item.category)===sel;
+        if(!catOK) return false;
+        if(!words.length) return true;
+        var hay=searchable(item.name+" "+item.url+" "+item.category+" "+item.description);
+        return words.every(function(w){return hay.indexOf(w)!==-1});
+    });
+}
 
-                "&":"&amp;",
-
-                "<":"&lt;",
-
-                ">":"&gt;",
-
-                '"':"&quot;",
-
-                "'":"&#039;"
-
-            }[m];
-
+function getCategories(){
+    var list=[], seen={};
+    links.forEach(function(item){
+        var key=normalize(item.category);
+        if(!key) return;
+        if(!seen[key]){
+            seen[key]=true;
+            list.push({name:item.category,count:1});
+        } else {
+            for(var i=0;i<list.length;i++){
+                if(normalize(list[i].name)===key){list[i].count++;break}
+            }
         }
-
-    );
-
+    });
+    list.sort(function(a,b){return b.count-a.count});
+    return [{name:"همه",count:links.length}].concat(list);
 }
-
-
-/* =========================================================
-   CATEGORY BUTTONS
-========================================================= */
 
 function renderCategories(){
-
-    const categories = [];
-
-    const seen = new Set();
-
-
-    /*
-       همیشه «همه» اول باشد
-    */
-
-    categories.push("همه");
-
-
-    links.forEach(function(item){
-
-        const cat =
-            categoryName(
-                item.category
-            );
-
-
-        if(!cat){
-            return;
-        }
-
-
-        const key =
-            normalize(cat);
-
-
-        if(
-            !seen.has(key)
-        ){
-
-            seen.add(key);
-
-            categories.push(cat);
-
-        }
-
+    var cats=getCategories();
+    var toolbar=document.getElementById("toolbar");
+    toolbar.innerHTML="";
+    cats.forEach(function(cat){
+        var btn=document.createElement("button");
+        btn.type="button";
+        btn.className="cat-btn"+(normalize(cat.name)===normalize(selectedCategory)?" active":"");
+        btn.innerHTML=esc(cat.name)+' <span class="cat-count">'+faDigits(cat.count)+'</span>';
+        btn.addEventListener("click",function(){
+            selectedCategory=cat.name;
+            renderCategories();
+            render();
+        });
+        toolbar.appendChild(btn);
     });
 
-
-    const container =
-        document.getElementById(
-            "cats"
-        );
-
-
-    container.innerHTML = "";
-
-
-    categories.forEach(function(cat){
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-
-        button.type = "button";
-
-
-        button.className = "cat";
-
-
-        /*
-           دسته فعال
-        */
-
-        if(
-            normalize(cat) ===
-            normalize(selectedCategory)
-        ){
-
-            button.classList.add(
-                "active"
-            );
-
-        }
-
-
-        /*
-           فقط نام دسته
-           بدون تعداد لینک
-        */
-
-        button.textContent = cat;
-
-
-        /*
-           کلیک
-        */
-
-        button.addEventListener(
-            "click",
-            function(){
-
-                selectedCategory = cat;
-
-                renderCategories();
-
-                render();
-
-            }
-        );
-
-
-        container.appendChild(
-            button
-        );
-
+    /* footer quick links */
+    var fl=document.getElementById("footerLinks");
+    fl.innerHTML="";
+    cats.filter(function(c){return c.name!=="همه"}).forEach(function(cat){
+        var li=document.createElement("li");
+        var btn=document.createElement("button");
+        btn.type="button";
+        btn.className="footer-link";
+        btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg> '+esc(cat.name);
+        btn.addEventListener("click",function(){
+            selectedCategory=cat.name;
+            renderCategories();
+            render();
+            window.scrollTo({top:0,behavior:"smooth"});
+        });
+        li.appendChild(btn);
+        fl.appendChild(li);
     });
-
 }
 
+function renderSkeleton(){
+    var grid=document.getElementById("grid");
+    var html="";
+    for(var i=0;i<8;i++){
+        html+='<div class="skel-card animate-card-in" style="animation-delay:'+i*45+'ms">'+
+            '<div class="skel-row">'+
+            '<div class="skel-icon skeleton-shimmer"></div>'+
+            '<div style="flex:1;padding-top:.25rem">'+
+            '<div class="skel-line skeleton-shimmer" style="width:75%;margin-bottom:.5rem"></div>'+
+            '<div class="skel-line-sm skeleton-shimmer" style="width:33%"></div>'+
+            '</div></div>'+
+            '<div style="margin-top:1rem">'+
+            '<div class="skel-line-sm skeleton-shimmer" style="width:100%;margin-bottom:.5rem"></div>'+
+            '<div class="skel-line-sm skeleton-shimmer" style="width:66%"></div>'+
+            '</div>'+
+            '<div class="skeleton-shimmer" style="margin-top:1rem;height:1px"></div>'+
+            '<div class="skel-line-sm skeleton-shimmer" style="margin-top:.875rem;width:50%"></div>'+
+            '</div>';
+    }
+    grid.innerHTML=html;
+}
 
-/* =========================================================
-   SMART SEARCH + CATEGORY FILTER
-========================================================= */
+function renderEmpty(){
+    document.getElementById("grid").innerHTML=
+        '<div class="empty-box animate-card-in">'+
+        '<svg style="width:3.5rem;height:3.5rem;color:#cbd5e1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/></svg>'+
+        '<h3>نتیجه‌ای پیدا نشد</h3>'+
+        '<p>برای عبارت جستجو یا دسته‌بندی انتخابی، لینک مجازی ثبت نشده است. عبارت دیگری را امتحان کنید یا فیلترها را حذف کنید.</p>'+
+        '<button class="action-btn" onclick="resetFilters()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.9-6.6"/><path d="M21 3v5.5h-5.5"/></svg> حذف فیلترها و جستجو</button>'+
+        '</div>';
+}
+
+function renderError(msg){
+    document.getElementById("grid").innerHTML=
+        '<div class="error-box animate-card-in">'+
+        '<svg style="width:3rem;height:3rem;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.1 2.9 17a2 2 0 0 0 1.7 3h14.8a2 2 0 0 0 1.7-3L13.7 4.1a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4.5M12 17h.01"/></svg>'+
+        '<h3>خطا در دریافت فهرست لینک‌ها</h3>'+
+        '<p>'+esc(msg)+'<br>لطفاً مطمئن شوید فایل <b>Links.csv</b> کنار صفحه قرار دارد و ارتباط شبکه برقرار است.</p>'+
+        '<button class="action-btn" onclick="loadData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.9-6.6"/><path d="M21 3v5.5h-5.5"/></svg> تلاش دوباره</button>'+
+        '</div>';
+}
 
 function render(){
+    var filtered=getFiltered();
+    var words=getWords();
+    var hasFilters = words.length>0 || normalize(selectedCategory)!=="همه";
 
-    const searchInput =
-        document.getElementById(
-            "search"
-        );
+    /* status row */
+    var statusRow=document.getElementById("statusRow");
+    statusRow.style.display=hasFilters?"flex":"none";
+    document.getElementById("statusText").innerHTML=
+        'نمایش <b>'+faDigits(filtered.length)+'</b> از '+faDigits(links.length)+' لینک مجاز';
+    document.getElementById("clearBtn").style.display=hasFilters?"inline-flex":"none";
 
-
-    const query =
-        searchable(
-            searchInput.value
-        );
-
-
-    const selected =
-        normalize(
-            selectedCategory
-        );
-
-
-    const filtered =
-        links.filter(
-            function(item){
-
-                /*
-                   دسته‌بندی
-                */
-
-                const itemCategory =
-                    normalize(
-                        categoryName(
-                            item.category
-                        )
-                    );
-
-
-                const categoryOK =
-
-                    selected === "همه"
-
-                    ||
-
-                    itemCategory === selected;
-
-
-                /*
-                   متن کامل قابل جستجو
-                */
-
-                const searchableText =
-                    searchable(
-
-                        item.name
-
-                        + " "
-
-                        + item.url
-
-                        + " "
-
-                        + item.category
-
-                        + " "
-
-                        + item.description
-
-                    );
-
-
-                let searchOK = true;
-
-
-                /*
-                   جستجوی هوشمند
-                */
-
-                if(query !== ""){
-
-                    const searchWords =
-                        query
-                            .split(" ")
-                            .filter(Boolean);
-
-
-                    /*
-                       تمام کلمات جستجو
-                       باید پیدا شوند
-                    */
-
-                    searchOK =
-                        searchWords.every(
-                            function(word){
-
-                                return searchableText
-                                    .includes(word);
-
-                            }
-                        );
-
-                }
-
-
-                return (
-
-                    categoryOK
-
-                    &&
-
-                    searchOK
-
-                );
-
-            }
-        );
-
-
-    /*
-       تعداد نتیجه
-    */
-
-    document
-        .getElementById(
-            "status"
-        )
-        .textContent =
-
-        filtered.length +
-        " لینک مجاز";
-
-
-    const results =
-        document.getElementById(
-            "results"
-        );
-
-
-    /*
-       بدون نتیجه
-    */
-
+    /* grid */
+    var grid=document.getElementById("grid");
     if(!filtered.length){
-
-        results.innerHTML =
-
-            '<div class="empty">' +
-
-            'برای جستجوی شما لینکی پیدا نشد.' +
-
-            '</div>';
-
+        renderEmpty();
         return;
-
     }
 
+    var html="";
+    filtered.forEach(function(item,i){
+        var vis=catVisual(item.category);
+        var delay=Math.min(i,14)*40;
+        html+='<a class="card animate-card-in" href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer" style="animation-delay:'+delay+'ms">'+
+            '<span class="card-accent" style="background:linear-gradient(to left,'+vis.color+','+vis.color+' 55%,var(--gold-500))"></span>'+
+            '<span class="card-glow" style="background:radial-gradient(circle,'+vis.color+'22,transparent 70%)"></span>'+
+            '<div class="card-top">'+
+                '<span class="card-icon" style="background:'+vis.color+'14;color:'+vis.color+'">'+vis.icon+'</span>'+
+                '<div class="card-info">'+
+                    '<h3 class="card-title">'+highlight(item.name,words)+'</h3>'+
+                    '<span class="card-badge" style="background:'+vis.color+'1a;color:'+vis.color+'">'+esc(item.category)+'</span>'+
+                '</div>'+
+                '<button type="button" class="card-copy" data-url="'+esc(item.url)+'" aria-label="کپی آدرس سامانه" title="کپی آدرس">'+
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>'+
+                '</button>'+
+            '</div>'+
+            '<p class="card-desc">'+(item.description?highlight(item.description,words):'بدون توضیحات')+'</p>'+
+            '<div class="card-bottom">'+
+                '<span class="card-url">'+esc(displayHost(item.url))+'</span>'+
+                '<span class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 17 7 7"/><path d="M15.5 7H7v8.5"/></svg></span>'+
+            '</div>'+
+        '</a>';
+    });
+    grid.innerHTML=html;
 
-    /*
-       نمایش لینک‌ها
-    */
-
-    results.innerHTML =
-
-        filtered.map(
-            function(item){
-
-                return `
-
-                    <a
-
-                        class="card"
-
-                        href="${esc(item.url)}"
-
-                        target="_blank"
-
-                        rel="noopener noreferrer">
-
-
-                        <div class="title">
-
-                            ${esc(
-                                item.name
-                            )}
-
-                        </div>
-
-
-                        <span class="badge">
-
-                            ${esc(
-                                categoryName(
-                                    item.category
-                                )
-                            )}
-
-                        </span>
-
-
-                        <div class="desc">
-
-                            ${esc(
-                                item.description
-                                || ""
-                            )}
-
-                        </div>
-
-
-                        <div class="url">
-
-                            ${esc(
-                                item.url
-                            )}
-
-                        </div>
-
-
-                    </a>
-
-                `;
-
-            }
-
-        ).join("");
+    /* copy buttons */
+    grid.querySelectorAll(".card-copy").forEach(function(btn){
+        btn.addEventListener("click",function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            var url=btn.getAttribute("data-url");
+            copyText(url).then(function(ok){
+                if(ok){
+                    btn.classList.add("copied");
+                    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
+                    showToast("آدرس سامانه در حافظه موقت کپی شد");
+                    setTimeout(function(){
+                        btn.classList.remove("copied");
+                        btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+                    },1600);
+                } else {
+                    showToast("کپی آدرس امکان‌پذیر نشد");
+                }
+            });
+        });
+    });
 
 }
 
+function resetFilters(){
+    query="";
+    selectedCategory="همه";
+    document.getElementById("search").value="";
+    document.getElementById("searchClear").style.display="none";
+    document.getElementById("searchHint").style.display="";
+    renderCategories();
+    render();
+}
 
 /* =========================================================
    LOAD CSV
 ========================================================= */
+function loadData(){
+    links=[];
+    renderSkeleton();
+    document.getElementById("statusRow").style.display="none";
 
-async function load(){
+    fetch("Links.csv?ts="+Date.now(),{cache:"no-store"})
+    .then(function(r){
+        if(!r.ok) throw new Error("فایل Links.csv پیدا نشد.");
+        return r.arrayBuffer();
+    })
+    .then(function(buf){
+        var text=new TextDecoder("utf-8").decode(buf).replace(/^\uFEFF/,"");
+        var rows=parseCSV(text);
+        if(!rows.length) throw new Error("فایل Links.csv خالی است.");
 
-    try{
+        /* detect header row — could be row 0 or row 1 (if Sheet column exists) */
+        var headerRow=rows[0];
+        var headers=headerRow.map(function(h){return normalize(h)});
 
-        const response =
-            await fetch(
-
-                "Links.csv?ts=" +
-                Date.now(),
-
-                {
-                    cache:"no-store"
-                }
-
-            );
-
-
-        if(!response.ok){
-
-            throw new Error(
-                "فایل Links.csv پیدا نشد."
-            );
-
-        }
-
-
-        const buffer =
-            await response.arrayBuffer();
-
-
-        const text =
-            new TextDecoder(
-                "utf-8"
-            )
-
-            .decode(buffer)
-
-            .replace(
-                /^\uFEFF/,
-                ""
-            );
-
-
-        const rows =
-            parseCSV(text);
-
-
-        if(!rows.length){
-
-            throw new Error(
-                "فایل Links.csv خالی است."
-            );
-
-        }
-
-
-        /*
-           Header
-        */
-
-        const headers =
-            rows[0].map(
-                function(header){
-
-                    return normalize(
-                        header
-                    );
-
-                }
-            );
-
-
-        /*
-           پیدا کردن ستون
-        */
-
-        function column(names){
-
-            for(
-                let i=0;
-                i<names.length;
-                i++
-            ){
-
-                const index =
-                    headers.indexOf(
-                        normalize(
-                            names[i]
-                        )
-                    );
-
-
-                if(index !== -1){
-
-                    return index;
-
-                }
-
+        function col(names){
+            for(var i=0;i<names.length;i++){
+                var idx=headers.indexOf(normalize(names[i]));
+                if(idx!==-1) return idx;
             }
-
-
             return -1;
-
         }
 
-
-        const nameIndex =
-            column([
-
-                "نام سایت",
-
-                "نام‌سایت",
-
-                "نام"
-
-            ]);
-
-
-        const urlIndex =
-            column([
-
-                "آدرس",
-
-                "آدرس سایت",
-
-                "لینک",
-
-                "url"
-
-            ]);
-
-
-        const categoryIndex =
-            column([
-
-                "دسته‌بندی",
-
-                "دسته بندی",
-
-                "دسته"
-
-            ]);
-
-
-        const statusIndex =
-            column([
-
-                "وضعیت",
-
-                "status"
-
-            ]);
-
-
-        const descriptionIndex =
-            column([
-
-                "توضیحات",
-
-                "توضیح",
-
-                "description"
-
-            ]);
-
-
-        /*
-           بررسی ستون‌ها
-        */
-
-        if(nameIndex === -1){
-
-            throw new Error(
-                "ستون «نام سایت» پیدا نشد."
-            );
-
-        }
-
-
-        if(urlIndex === -1){
-
-            throw new Error(
-                "ستون «آدرس» پیدا نشد."
-            );
-
-        }
-
-
-        if(categoryIndex === -1){
-
-            throw new Error(
-                "ستون «دسته‌بندی» پیدا نشد."
-            );
-
-        }
-
-
-        if(statusIndex === -1){
-
-            throw new Error(
-                "ستون «وضعیت» پیدا نشد."
-            );
-
-        }
-
-
-        /*
-           تبدیل CSV به Object
-        */
-
-        links = rows
-
-            .slice(1)
-
-            .map(
-                function(row){
-
-                    return {
-
-                        name:
-                            clean(
-                                row[
-                                    nameIndex
-                                ]
-                            ),
-
-
-                        url:
-                            clean(
-                                row[
-                                    urlIndex
-                                ]
-                            ),
-
-
-                        category:
-                            categoryName(
-                                row[
-                                    categoryIndex
-                                ]
-                            ),
-
-
-                        status:
-                            clean(
-                                row[
-                                    statusIndex
-                                ]
-                            ),
-
-
-                        description:
-
-                            descriptionIndex !== -1
-
-                            ?
-
-                            clean(
-                                row[
-                                    descriptionIndex
-                                ]
-                            )
-
-                            :
-
-                            ""
-
-                    };
-
-                }
-
-            )
-
-            /*
-               فقط لینک‌های فعال
-            */
-
-            .filter(
-                function(item){
-
-                    return (
-
-                        item.name !== ""
-
-                        &&
-
-                        item.url !== ""
-
-                        &&
-
-                        normalize(
-                            item.status
-                        ) === "فعال"
-
-                    );
-
-                }
-            );
-
-
-        /*
-           نمایش
-        */
-
+        var nameIdx=col(["نام سایت","نام‌سایت","نام"]);
+        var urlIdx=col(["آدرس","آدرس سایت","لینک","url"]);
+        var catIdx=col(["دسته‌بندی","دسته بندی","دسته"]);
+        var statusIdx=col(["وضعیت","status"]);
+        var descIdx=col(["توضیحات","توضیح","description"]);
+
+        if(nameIdx===-1) throw new Error("ستون «نام سایت» پیدا نشد.");
+        if(urlIdx===-1) throw new Error("ستون «آدرس» پیدا نشد.");
+        if(catIdx===-1) throw new Error("ستون «دسته‌بندی» پیدا نشد.");
+        if(statusIdx===-1) throw new Error("ستون «وضعیت» پیدا نشد.");
+
+        links=rows.slice(1).map(function(row){
+            return {
+                name:clean(row[nameIdx]),
+                url:clean(row[urlIdx]),
+                category:categoryName(row[catIdx]),
+                status:clean(row[statusIdx]),
+                description:descIdx!==-1?clean(row[descIdx]):""
+            };
+        }).filter(function(item){
+            /* skip metadata rows like "دسته‌بندی‌ها" and "راهنما" */
+            var firstCol=normalize(row_name(item));
+            if(firstCol==="دسته‌بندی‌ها"||firstCol==="دسته بندی‌ها"||firstCol==="راهنما") return false;
+            return item.name!=="" && item.url!=="" && normalize(item.status)==="فعال";
+        });
+
+        /* also filter out rows where name is actually a sheet/category label */
+        links=links.filter(function(item){
+            var n=normalize(item.name);
+            return n!=="دسته‌بندی‌ها" && n!=="راهنما" && n!=="links";
+        });
+
+        /* render */
         renderCategories();
-
         render();
-
-    }
-
-
-    catch(error){
-
-        console.error(error);
-
-
-        document
-            .getElementById(
-                "results"
-            )
-            .innerHTML =
-
-            '<div class="empty">' +
-
-            esc(
-                error.message
-            ) +
-
-            '<br><br>' +
-
-            'لطفاً فایل Links.csv را کنار index.html قرار دهید.' +
-
-            '</div>';
-
-    }
-
+    })
+    .catch(function(err){
+        console.error(err);
+        renderError(err.message||"خطای نامشخص");
+    });
 }
 
+/* helper to get first column value for metadata filtering */
+var _rawRows=[];
+function row_name(item){ return item.name; }
 
 /* =========================================================
-   SEARCH EVENT
+   EVENTS
 ========================================================= */
+var searchInput=document.getElementById("search");
+var searchClear=document.getElementById("searchClear");
+var searchHint=document.getElementById("searchHint");
 
-document
-    .getElementById(
-        "search"
-    )
-    .addEventListener(
-        "input",
-        function(){
+searchInput.addEventListener("input",function(){
+    query=searchInput.value;
+    searchClear.style.display=query?"flex":"none";
+    searchHint.style.display=query?"none":"";
+    render();
+});
 
-            render();
+searchInput.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){
+        query="";
+        searchInput.value="";
+        searchClear.style.display="none";
+        searchHint.style.display="";
+        searchInput.blur();
+        render();
+    }
+});
 
-        }
-    );
+searchClear.addEventListener("click",function(){
+    query="";
+    searchInput.value="";
+    searchClear.style.display="none";
+    searchHint.style.display="";
+    searchInput.focus();
+    render();
+});
 
+document.getElementById("clearBtn").addEventListener("click",resetFilters);
 
-/* =========================================================
-   START
-========================================================= */
+/* "/" shortcut */
+document.addEventListener("keydown",function(e){
+    var tag=(e.target.tagName||"").toLowerCase();
+    if(e.key==="/" && tag!=="input" && tag!=="textarea"){
+        e.preventDefault();
+        searchInput.focus();
+    }
+});
 
-load();
+/* clock */
+updateClock();
+setInterval(updateClock,1000);
 
+/* start */
+loadData();
 </script>
-
-
 </body>
-
 </html>
+
+
