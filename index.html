@@ -316,30 +316,31 @@ mark{
     display:none;
     flex-direction:column;
     align-items:flex-end;
-    gap:.625rem;
+    gap:.5rem;
     flex-shrink:0;
-    font-size:.75rem;
 }
 @media(min-width:768px){
     .meta-box{display:flex}
 }
 
-<meta-date{
+.meta-date{
     display:inline-flex;
     align-items:center;
     gap:.5rem;
     color:var(--steel-200);
-    font-size:.8125rem;
-    font-weight:500;
-    padding:.25rem .5rem;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:.625rem;
+    font-family:var(--font-mono);
+    font-size:1rem;
+    font-weight:600;
+    padding:.375rem .75rem;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:.75rem;
     backdrop-filter:blur(8px);
     transition:all .2s cubic-bezier(.2,.7,.3,1);
+    white-space:nowrap;
 }
 .meta-date:hover{
-    background:rgba(255,255,255,.1);
+    background:rgba(255,255,255,.12);
     border-color:rgba(201,162,75,.3);
     color:var(--gold-300);
     transform:translateY(-1px);
@@ -349,43 +350,44 @@ mark{
     align-items:center;
     gap:.5rem;
     font-family:var(--font-mono);
-    font-size:1.25rem;
+    font-size:1rem;
     font-weight:700;
     color:#fff;
-    letter-spacing:.08em;
-    text-shadow:0 0 20px rgba(216,185,106,.6), 0 2px 8px rgba(2,10,26,.5);
-    padding:.25rem .5rem;
-    background:linear-gradient(135deg,rgba(201,162,75,.15),rgba(47,116,218,.1));
-    border:1px solid rgba(201,162,75,.3);
+    letter-spacing:.06em;
+    text-shadow:0 0 16px rgba(216,185,106,.5), 0 2px 8px rgba(2,10,26,.4);
+    padding:.375rem .75rem;
+    background:linear-gradient(135deg,rgba(201,162,75,.18),rgba(47,116,218,.12));
+    border:1px solid rgba(201,162,75,.35);
     border-radius:.75rem;
     backdrop-filter:blur(8px);
     box-shadow:
-        0 4px 24px -4px rgba(201,162,75,.3),
+        0 4px 20px -4px rgba(201,162,75,.25),
         inset 0 1px 0 rgba(255,255,255,.1);
     transition:all .3s cubic-bezier(.2,.7,.3,1);
+    white-space:nowrap;
 }
 .meta-time:hover{
-    transform:scale(1.02);
+    transform:scale(1.01);
     box-shadow:
-        0 8px 32px -6px rgba(201,162,75,.45),
-        inset 0 1px 0 rgba(255,255,255,.15);
+        0 6px 28px -4px rgba(201,162,75,.35),
+        inset 0 1px 0 rgba(255,255,255,.12);
     border-color:rgba(201,162,75,.5);
 }
 
 /* search */
 .search-section{
-    margin-top:2.5rem;
+    margin-top:1.5rem;
     max-width:48rem;
     margin-left:auto;
     margin-right:auto;
 }
 .search-label{
     display:block;
-    margin-bottom:.75rem;
+    margin-bottom:.5rem;
     font-family:var(--font-display);
-    font-size:.8125rem;
+    font-size:.75rem;
     font-weight:600;
-    color:var(--gold-300);
+    color:var(--navy-700);
     text-align:center;
 }
 .search-wrap{
@@ -1101,7 +1103,6 @@ mark{
         </div>
 
         <div class="search-section">
-            <label for="search" class="search-label">جستجوی سامانه</label>
             <div class="search-wrap">
                 <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/></svg>
                 <input id="search" class="search-input" type="text" placeholder="نام، آدرس یا توضیح سامانه موردنظر را بنویسید…" autocomplete="off">
