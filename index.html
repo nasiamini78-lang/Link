@@ -497,7 +497,8 @@ mark{
     position:sticky;
     top:.75rem;
     z-index:30;
-    margin-top:2rem;
+    margin-top:1rem;
+    padding:0 .5rem;
 }
 .toolbar{
     display:flex;
@@ -505,14 +506,14 @@ mark{
     align-items:center;
     justify-content:center;
     gap:.5rem;
-    padding:.5rem;
-    background:rgba(255,255,255,.98);
+    padding:.5rem .75rem;
+    background:rgba(255,255,255,.95);
     border:1px solid var(--line);
     border-radius:.875rem;
     box-shadow:
-        0 12px 40px -16px rgba(8,28,63,.3),
-        0 0 0 1px rgba(255,255,255,.5) inset;
-    backdrop-filter:blur(12px);
+        0 8px 32px -8px rgba(8,28,63,.15),
+        0 0 0 1px rgba(255,255,255,.6) inset;
+    backdrop-filter:blur(16px);
     position:relative;
     z-index:40;
 }
@@ -548,21 +549,6 @@ mark{
     box-shadow:
         0 8px 24px -8px rgba(8,28,63,.6),
         0 0 0 1px rgba(255,255,255,.1) inset;
-}
-.cat-count{
-    padding:.125rem .5rem;
-    border-radius:.375rem;
-    font-size:.625rem;
-    font-weight:700;
-    line-height:1;
-}
-.cat-btn.active .cat-count{
-    background:var(--gold-500);
-    color:var(--navy-950);
-}
-.cat-btn:not(.active) .cat-count{
-    background:var(--paper);
-    color:var(--muted);
 }
 
 /* status row */
@@ -622,19 +608,25 @@ mark{
 
 /* grid */
 .grid{
-    margin-top:1.5rem;
+    margin-top:1rem;
     display:grid;
     grid-template-columns:1fr;
-    gap:1rem;
+    gap:.875rem;
 }
-@media(min-width:520px){
+@media(min-width:480px){
     .grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(min-width:1024px){
+@media(min-width:768px){
     .grid{grid-template-columns:repeat(3,1fr)}
 }
-@media(min-width:1280px){
+@media(min-width:1024px){
     .grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:1280px){
+    .grid{grid-template-columns:repeat(5,1fr)}
+}
+@media(min-width:1536px){
+    .grid{grid-template-columns:repeat(6,1fr)}
 }
 
 /* card */
@@ -809,7 +801,8 @@ mark{
     font-family:var(--font-mono);
     font-size:.625rem;
     letter-spacing:-.01em;
-    color:#64748b;
+    color:#334155;
+    font-weight:600;
     direction:ltr;
     text-align:left;
     white-space:nowrap;
@@ -1101,22 +1094,23 @@ mark{
                 <span class="meta-time" id="metaTime" dir="ltr"></span>
             </div>
         </div>
-
-        <div class="search-section">
-            <div class="search-wrap">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/></svg>
-                <input id="search" class="search-input" type="text" placeholder="نام، آدرس یا توضیح سامانه موردنظر را بنویسید…" autocomplete="off">
-                <span class="search-hint" id="searchHint">/</span>
-                <button class="search-clear" id="searchClear" style="display:none" aria-label="پاک کردن جستجو">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
-                </button>
-            </div>
-        </div>
     </div>
 </header>
 
 <!-- MAIN -->
 <main class="main">
+    <!-- search -->
+    <div class="search-section" id="searchSection">
+        <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/></svg>
+            <input id="search" class="search-input" type="text" placeholder="نام، آدرس یا توضیح سامانه موردنظر را بنویسید…" autocomplete="off">
+            <span class="search-hint" id="searchHint">/</span>
+            <button class="search-clear" id="searchClear" style="display:none" aria-label="پاک کردن جستجو">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            </button>
+        </div>
+    </div>
+
     <!-- toolbar -->
     <div class="toolbar-wrap">
         <nav class="toolbar" id="toolbar" aria-label="دسته‌بندی لینک‌ها"></nav>
@@ -1349,12 +1343,9 @@ function updateClock(){
         new Intl.DateTimeFormat("fa-IR",{day:"numeric",month:"long",year:"numeric"}).format(now);
     
     var timeStr=new Intl.DateTimeFormat("fa-IR",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(now);
-    var parts=timeStr.split(":");
-    var blink=Math.floor(Date.now()/500)%2===0;
-    var separator=blink ? '<span style="opacity:1;transition:opacity .1s">:</span>' : '<span style="opacity:0;transition:opacity .1s">:</span>';
     document.getElementById("metaTime").innerHTML=
         '<svg style="width:1rem;height:1rem;color:var(--gold-400)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg> '+
-        parts[0]+separator+parts[1]+separator+parts[2];
+        timeStr;
 }
 
 /* =========================================================
