@@ -499,9 +499,9 @@ mark{
 /* category bar */
 .toolbar-wrap{
     position:sticky;
-    top:1rem;
+    top:1.5rem;
     z-index:30;
-    margin-top:1.5rem;
+    margin-top:2.5rem;
 }
 .toolbar{
     display:flex;
@@ -620,14 +620,17 @@ mark{
     grid-template-columns:1fr;
     gap:1rem;
 }
-@media(min-width:520px){
+@media(min-width:480px){
     .grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(min-width:1024px){
+@media(min-width:768px){
     .grid{grid-template-columns:repeat(3,1fr)}
 }
-@media(min-width:1280px){
+@media(min-width:1024px){
     .grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(min-width:1360px){
+    .grid{grid-template-columns:repeat(5,1fr)}
 }
 
 /* card */
@@ -637,7 +640,7 @@ mark{
     flex-direction:column;
     overflow:hidden;
     padding:1rem;
-    min-height:150px;
+    min-height:170px;
     background:#fff;
     border:1px solid var(--line);
     border-radius:.75rem;
@@ -774,13 +777,18 @@ mark{
 .card-desc{
     position:relative;
     margin-top:.75rem;
-    min-height:3rem;
+    min-height:4rem;
     flex:1;
     font-size:.7rem;
     line-height:1.6;
     color:var(--muted);
     word-break:break-word;
     overflow-wrap:anywhere;
+    display:-webkit-box;
+    -webkit-line-clamp:5;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .card-bottom{
