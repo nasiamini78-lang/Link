@@ -69,6 +69,24 @@ body::before{
     background-size:34px 34px;
 }
 
+/* logo watermark */
+body::after{
+    content:"";
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:400px;
+    height:400px;
+    background-image:url('logo.png');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    opacity:.02;
+    pointer-events:none;
+    z-index:-1;
+}
+
 ::selection{
     background:rgba(201,162,75,.42);
     color:var(--navy-900);
@@ -210,7 +228,6 @@ mark{
 .header-inner{
     position:relative;
     z-index:10;
-    max-width:72rem;
     margin:0 auto;
     padding:2.5rem 1rem 5rem;
     border-radius:0 0 2rem 2rem;
@@ -381,9 +398,12 @@ mark{
 /* search */
 .search-section{
     margin-top:2rem;
-    max-width:48rem;
     margin-left:auto;
     margin-right:auto;
+    padding:0 1rem;
+}
+@media(min-width:640px){
+    .search-section{padding:0 1.5rem}
 }
 .search-label{
     display:block;
@@ -488,7 +508,6 @@ mark{
 .main{
     position:relative;
     z-index:20;
-    max-width:72rem;
     margin:-3rem auto 0;
     padding:0 1rem 3rem;
 }
@@ -937,7 +956,6 @@ mark{
 .footer-inner{
     position:relative;
     z-index:10;
-    max-width:72rem;
     margin:0 auto;
     padding:0 1rem;
 }
